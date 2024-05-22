@@ -54,7 +54,7 @@ from utils.general import (LOGGER, Profile, check_file, check_img_size, check_im
 from utils.torch_utils import select_device, smart_inference_mode
 from keras.models import Sequential
 import tensorflow as tf
-model_f1 = tf.keras.models.load_model("/content/drive/MyDrive/Colab_Notebooks/ENTRENAMIENTO_1A")
+model_f1 = tf.keras.models.load_model("ENTRENAMIENTO_1A")
 tabla_switch = {
     0: 'CVEL_90',
     1: 'CVEL_100',
