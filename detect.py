@@ -38,6 +38,7 @@ import utils
 import torch
 import cv2
 import numpy as np
+import time
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -239,7 +240,7 @@ def run(
                         
                         
                     if save_crop:
-                        
+                        start = time.time()
                         #print(xyxy)
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         a=file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg'
@@ -264,6 +265,9 @@ def run(
                         label = None if hide_labels else (usa_switch(predicted_class) if hide_conf else f'{usa_switch(predicted_class)} {conf:.2f}')
                         annotator.box_label(xyxy, label, color=colors(c, True))
                         #save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
+                        end = time.time()
+                        print("\nProcessing time = %0.3f segundos" % ((end-start)))
+            
             # Stream results
 
 
