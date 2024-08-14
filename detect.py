@@ -71,9 +71,25 @@ tabla_switch = {
     11: 'CVEL_60',
     12: 'CVEL_70',
     }
-
+tabla_ts = {
+    0: 9,
+    1: 10,
+    2: 0,
+    3: 11,
+    4: 12,
+    5: 1,
+    6: 4',
+    7: 3,
+    8: 8,
+    9: 5,
+    10: 2,
+    11: 6,
+    12: 7,
+    }
 def usa_switch(decimal):
     return tabla_switch.get(decimal, "NA")
+def usa_comp(decimal):
+    return tabla_ts.get(decimal, "NA")
 @smart_inference_mode()
 def run(
         weights=ROOT / 'yolov5s.pt',  # model path or triton URL
@@ -284,9 +300,13 @@ def run(
             # Stream results
 
 
-       
-
-            im0 = annotator.result()
+               
+            d=usa_comp(predicted_class)
+            if d = c:
+                im0 = annotator.result()
+            else:
+                print("xno")
+            
             #print(po)
             
             if view_img:
