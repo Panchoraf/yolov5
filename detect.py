@@ -249,7 +249,7 @@ def run(
                         input_image = cv2.imread(a)
                         height, width, channels = input_image.shape
                         croph=height*0.2
-                        cropw=width*0.2
+                        cropw=width*0.1
                         cropped_image = input_image[int(croph):int(height-croph), int(cropw):int(width-cropw)]
 
                         
