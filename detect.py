@@ -78,7 +78,7 @@ tabla_ts = {
     3: 11,
     4: 12,
     5: 1,
-    6: 4',
+    6: 4,
     7: 3,
     8: 8,
     9: 5,
@@ -291,7 +291,8 @@ def run(
                         #save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         end = time.time()
                         print("\nProcessing time = %0.3f segundos" % ((end-start)))
-                        with open(path.replace("jpg", "txt"), 'r') as q:
+                        with open(f'{txt_path}.txt', 'r') as q:
+                        #with open(path.replace("jpg", "txt"), 'r') as q:
                           text = q.read()
                           words = text.split()
                         #print(words[0])
