@@ -266,8 +266,8 @@ def run(
                         print(usa_switch(predicted_class))
                         print(names[c],conf)
                         po=po+1
-                        label = None if hide_labels else (usa_switch(predicted_class) if hide_conf else f'{usa_switch(predicted_class)} {conf:.2f}')
-                        annotator.box_label(xyxy, label, color=colors(c, True))
+                        label1 = None if hide_labels else (usa_switch(predicted_class) if hide_conf else f'{usa_switch(predicted_class)} {conf:.2f}')
+                        annotator.box_label(xyxy, label1, color=colors(c, True))
                         #save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         end = time.time()
                         print("\nProcessing time = %0.3f segundos" % ((end-start)))
