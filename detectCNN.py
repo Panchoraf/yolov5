@@ -186,8 +186,8 @@ def run(
         csv_path = save_dir / 'predictions.csv'
 
         # Create or append to the CSV file
-        def write_to_csv(image_name, prediction, confidence):
-            data = {'Image Name': image_name, 'Prediction': prediction, 'Confidence': confidence}
+        def write_to_csv(image_name, prediction, confidence,cnn,savedd, pathh):
+            data = {'Image Name': image_name, 'Prediction': prediction, 'Confidence': confidence, 'Cnn': cnn,  'savedd': savedd, 'pathh': pathh }
             with open(csv_path, mode='a', newline='') as f:
                 writer = csv.DictWriter(f, fieldnames=data.keys())
                 if not csv_path.is_file():
