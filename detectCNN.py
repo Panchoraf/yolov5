@@ -245,13 +245,17 @@ def run(
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         a=file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg'
                         #print(names[c])
+                        ##LECTURA DE IMAGEN CROP
                         input_image = cv2.imread(a)
-                        
-
+                        height, width, channels = input_image.shape
+                        croph=height*0.2
+                        cropw=width*0.1
+                        cropped_image = input_image[int(croph):int(height-croph), int(cropw):int(width-cropw)]
+                        ####
                         #print(imc.shape)
                         #plt.imshow(imc)
                         #plt.show()
-                        curImg = cv2.resize(input_image , (32,32))
+                        curImg = cv2.resize(cropped_image , (32,32))
                         #cv2.imwrite('/content/drive/MyDrive/Colab_Notebooks/Prueba_YOLO_cROP/prueba2.jpg', curImg)
                         
                         curImg = curImg.reshape(1, curImg.shape[0], curImg.shape[1], curImg.shape[2])
@@ -267,6 +271,14 @@ def run(
                         #save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         end = time.time()
                         print("\nProcessing time = %0.3f segundos" % ((end-start)))
+                        with open(f'{txt_path}.txt', 'r') as q:
+                        #with open(path.replace("jpg", "txt"), 'r') as q:
+                          text = q.read()
+                          words = text.split()
+                        #print(words[0])
+                        write_to_csv(p.name, label, confidence_str,label1,c,words[0])
+                        
+                        
             
             # Stream results
 
