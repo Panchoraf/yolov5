@@ -71,9 +71,25 @@ tabla_switch = {
     11: 'CVEL_60',
     12: 'CVEL_70',
     }
-
+tabla_ts = {
+    0: 9,
+    1: 10,
+    2: 0,
+    3: 11,
+    4: 12,
+    5: 1,
+    6: 4,
+    7: 3,
+    8: 8,
+    9: 5,
+    10: 2,
+    11: 6,
+    12: 7,
+    }
 def usa_switch(decimal):
     return tabla_switch.get(decimal, "NA")
+def usa_comp(decimal):
+    return tabla_ts.get(decimal, "NA")
 @smart_inference_mode()
 def run(
         weights=ROOT / 'yolov5s.pt',  # model path or triton URL
@@ -186,8 +202,10 @@ def run(
         csv_path = save_dir / 'predictions.csv'
 
         # Create or append to the CSV file
-        def write_to_csv(image_name, prediction, confidence,cnn,savedd, pathh):
-            data = {'Image Name': image_name, 'Prediction': prediction, 'Confidence': confidence, 'Cnn': cnn,  'savedd': savedd, 'pathh': pathh }
+        #def write_to_csv(image_name, prediction, confidence,cnn,savedd, pathh):
+        def write_to_csv(image_name, prediction, confidence,cnn,savedd, pathh,we,he):
+            data = {'Image Name': image_name, 'Prediction': prediction, 'Confidence': confidence, 'Cnn': cnn,  'savedd': savedd, 'pathh': pathh,  'we': we, 'he': he }
+            #data = {'Image Name': image_name, 'Prediction': prediction, 'Confidence': confidence, 'Cnn': cnn,  'savedd': savedd, 'pathh': pathh }
             with open(csv_path, mode='a', newline='') as f:
                 writer = csv.DictWriter(f, fieldnames=data.keys())
                 if not csv_path.is_file():
@@ -248,8 +266,10 @@ def run(
                         ##LECTURA DE IMAGEN CROP
                         input_image = cv2.imread(a)
                         height, width, channels = input_image.shape
-                        croph=height*0.2
-                        cropw=width*0.1
+                        he=0.2
+                        we=0.1
+                        croph=height*he
+                        cropw=width*we
                         cropped_image = input_image[int(croph):int(height-croph), int(cropw):int(width-cropw)]
                         ####
                         #print(imc.shape)
@@ -266,7 +286,7 @@ def run(
                         print(usa_switch(predicted_class))
                         print(names[c],conf)
                         po=po+1
-                        label1 = None if hide_labels else (usa_switch(predicted_class) if hide_conf else f'{usa_switch(predicted_class)} {conf:.2f}')
+                        label1 = None if hide_labels else (usa_switch(predicted_class) if hide_conf else f'{usa_switch(predicted_class)} {conf:.2f} {he} {we}')
                         annotator.box_label(xyxy, label1, color=colors(c, True))
                         #save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                         end = time.time()
@@ -276,7 +296,13 @@ def run(
                           text = q.read()
                           words = text.split()
                         #print(words[0])
-                        write_to_csv(p.name, label, confidence_str,label1,c,words[0])
+                        d=usa_comp(predicted_class)
+                        if d == c:
+                          a=1
+                        else:
+                          a=0
+                        #write_to_csv(p.name, label, confidence_str,label1,c,words[0])
+                        write_to_csv(p.name, label, confidence_str,label1,c,a,he,we)
                         
                         
             
